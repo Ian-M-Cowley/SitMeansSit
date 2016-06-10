@@ -1,5 +1,20 @@
-apply plugin: 'com.android.application'
+buildscript {
+    repositories {
+        mavenCentral()
+    }
 
+    dependencies {
+        classpath 'me.tatarka:gradle-retrolambda:3.2.5'
+    }
+}
+
+// Required because retrolambda is on maven central
+repositories {
+    mavenCentral()
+}
+
+apply plugin: 'com.android.application' //or apply plugin: 'java'
+apply plugin: 'me.tatarka.retrolambda'
 android {
     compileSdkVersion COMPILE_SDK_VERSION.toInteger()
     buildToolsVersion BUILD_TOOLS_VERSION
@@ -16,6 +31,13 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+}
+
+android {
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
@@ -37,4 +59,5 @@ dependencies {
     androidTestCompile "com.android.support.test.espresso:espresso-core:$ESPRESSO_VERSION"
     androidTestCompile "com.android.support.test:runner:$RUNNER_VERSION"
     androidTestCompile "com.android.support:support-annotations:$SUPPORT_VERSION"
+    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha2'
 }
