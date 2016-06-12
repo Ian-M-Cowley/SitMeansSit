@@ -3,5 +3,6 @@
     <color name="colorPrimary">#EC1923</color>
     <color name="colorPrimaryDark">#400001</color>
     <color name="colorAccent">#F6D134</color>
-    246-209-52
+
+    <color name="nav_header_background">#1F1F1F</color>
 </resources>

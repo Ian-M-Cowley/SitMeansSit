@@ -8,6 +8,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 
 /**
  * Created by Ian Cowley on 6/6/16 at 11:37 PM.
@@ -16,6 +17,8 @@ import android.support.v7.widget.Toolbar;
  */
 
 public abstract class BaseActivity extends AppCompatActivity {
+
+
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -60,9 +63,19 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     private NavigationView.OnNavigationItemSelectedListener mNavigationItemSelectedListener = item -> {
         switch (item.getItemId()) {
-
+            case R.id.contact_us:
+                Utils.launchDialer(this, AppModule.getPhoneNumber());
         }
         return true;
     };

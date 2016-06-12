@@ -7,14 +7,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.design.widget.NavigationView
-        android:id="@+id/nav_drawer"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="start"
-        app:menu="@menu/nav_menu"/>
+        android:orientation="vertical">
+
+        <include
+            layout="@layout/app_toolbar"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </FrameLayout>
+    </LinearLayout>
 
     <include
-        layout="@layout/app_toolbar"/>
-
+        layout="@layout/nav_drawer"/>
 </android.support.v4.widget.DrawerLayout>
