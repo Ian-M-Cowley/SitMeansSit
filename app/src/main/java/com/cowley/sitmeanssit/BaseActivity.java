@@ -10,6 +10,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.cowley.sitmeanssit.contact.ContactUsActivity;
+import com.cowley.sitmeanssit.home.HomeActivity;
+
 /**
  * Created by Ian Cowley on 6/6/16 at 11:37 PM.
  * <p>
@@ -20,12 +23,13 @@ public abstract class BaseActivity extends AppCompatActivity {
 
 
 
-    private DrawerLayout mDrawerLayout;
-    private ActionBarDrawerToggle mDrawerToggle;
-    private NavigationView mNavigationView;
-    private Toolbar mToolbar;
+    private DrawerLayout drawerLayout;
+    private ActionBarDrawerToggle drawerToggle;
+    private NavigationView navigationView;
+    private Toolbar toolbar;
 
     public abstract int getLayoutResourceId();
+    public abstract int getNavigationId();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,29 +39,29 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     private void setupToolbarAndNavDrawer() {
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (mDrawerLayout == null) return;
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawerLayout == null) return;
 
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        if (mToolbar == null) return;
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (toolbar == null) return;
 
-        mNavigationView = (NavigationView) findViewById(R.id.nav_drawer);
-        if (mNavigationView == null) return;
+        navigationView = (NavigationView) findViewById(R.id.nav_drawer);
+        if (navigationView == null) return;
 
-        mDrawerToggle = new ActionBarDrawerToggle(
-                this, mDrawerLayout, mToolbar, 0, 0);
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
-        mDrawerToggle.syncState();
+        drawerToggle = new ActionBarDrawerToggle(
+                this, drawerLayout, toolbar, 0, 0);
+        drawerLayout.setDrawerListener(drawerToggle);
+        drawerToggle.syncState();
 
-        mNavigationView.setNavigationItemSelectedListener(mNavigationItemSelectedListener);
-        setSupportActionBar(mToolbar);
+        navigationView.setNavigationItemSelectedListener(mNavigationItemSelectedListener);
+        navigationView.setCheckedItem(getNavigationId());
+        setSupportActionBar(toolbar);
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+        if (drawerLayout != null && drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
@@ -65,7 +69,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
+        if (drawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
 
@@ -74,8 +78,22 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     private NavigationView.OnNavigationItemSelectedListener mNavigationItemSelectedListener = item -> {
         switch (item.getItemId()) {
+            case R.id.home:
+                if (!(this instanceof HomeActivity)) {
+                    HomeActivity.start(this);
+                    finish();
+                } else {
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                }
+                break;
             case R.id.contact_us:
-                Utils.launchDialer(this, AppModule.getPhoneNumber());
+                if (!(this instanceof ContactUsActivity)) {
+                    ContactUsActivity.start(this);
+                    finish();
+                } else {
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                }
+                break;
         }
         return true;
     };
