@@ -1,7 +1,9 @@
 package com.cowley.sitmeanssit;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -9,8 +11,10 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
-import com.cowley.sitmeanssit.contact.ContactUsActivity;
+import com.cowley.sitmeanssit.contact.RequestConsultationActivity;
 import com.cowley.sitmeanssit.home.HomeActivity;
 
 /**
@@ -30,6 +34,9 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public abstract int getLayoutResourceId();
     public abstract int getNavigationId();
+    protected @StringRes int getToolbarTitleId() {
+        return R.string.app_name;
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,6 +62,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         navigationView.setNavigationItemSelectedListener(mNavigationItemSelectedListener);
         navigationView.setCheckedItem(getNavigationId());
+        toolbar.setTitle(getToolbarTitleId());
         setSupportActionBar(toolbar);
     }
 
@@ -86,9 +94,9 @@ public abstract class BaseActivity extends AppCompatActivity {
                     drawerLayout.closeDrawer(GravityCompat.START);
                 }
                 break;
-            case R.id.contact_us:
-                if (!(this instanceof ContactUsActivity)) {
-                    ContactUsActivity.start(this);
+            case R.id.request_consultation:
+                if (!(this instanceof RequestConsultationActivity)) {
+                    RequestConsultationActivity.start(this);
                     finish();
                 } else {
                     drawerLayout.closeDrawer(GravityCompat.START);
@@ -98,5 +106,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         return true;
     };
 
-
+    protected void hideKeyboard(View view) {
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
 }

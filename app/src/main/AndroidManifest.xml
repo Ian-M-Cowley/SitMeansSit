@@ -18,7 +18,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".contact.ContactUsActivity"
+        <activity android:name=".contact.RequestConsultationActivity"
                   android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>
