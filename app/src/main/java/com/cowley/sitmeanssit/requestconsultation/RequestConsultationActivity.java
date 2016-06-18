@@ -1,4 +1,4 @@
-package com.cowley.sitmeanssit.contact;
+package com.cowley.sitmeanssit.requestconsultation;
 
 import android.app.Activity;
 import android.content.Intent;

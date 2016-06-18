@@ -14,7 +14,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
-import com.cowley.sitmeanssit.contact.RequestConsultationActivity;
+import com.cowley.sitmeanssit.calendar.CalendarActivity;
+import com.cowley.sitmeanssit.requestconsultation.RequestConsultationActivity;
 import com.cowley.sitmeanssit.home.HomeActivity;
 
 /**
@@ -102,6 +103,13 @@ public abstract class BaseActivity extends AppCompatActivity {
                     drawerLayout.closeDrawer(GravityCompat.START);
                 }
                 break;
+            case R.id.calendar:
+                if (!(this instanceof CalendarActivity)) {
+                    CalendarActivity.start(this);
+                    finish();
+                } else {
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                }
         }
         return true;
     };

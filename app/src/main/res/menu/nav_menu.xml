@@ -15,5 +15,11 @@
             android:checked="false"
             android:icon="@drawable/ic_request_consult"
             android:title="@string/request_consultation"/>
+
+        <item
+            android:id="@+id/calendar"
+            android:checked="false"
+            android:icon="@drawable/ic_calendar"
+            android:title="@string/calendar"/>
     </group>
 </menu>
